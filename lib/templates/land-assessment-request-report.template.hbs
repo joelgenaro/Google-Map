@@ -1,0 +1,31 @@
+<html>
+<head>
+    <meta charset='UTF-8' />
+    <title>Land Assessment Report Request</title>
+    <style>
+        body { font-family: Arial, sans-serif; color: #333; }
+        .header { background-color: #342f74; color: white; padding: 1.5rem; border-radius: 1rem; }
+        .header h1 { margin: 0; }
+        .container { padding: 10px; }
+        .details { padding: 15px; border-radius: 0.75rem; background-color: #f5f5f5; }
+        .details h2 { margin-top: 0; }
+        .details p { margin: 10px 0; }
+        .footer { margin-top: 20px; font-size: 0.9em; color: #666; }
+    </style>
+</head>
+<body>
+    <div class='header'>
+        <h1>Land Assessment Report Request</h1>
+    </div>
+    <div class='container'>
+        <div class='details'>
+            <h2>Request Details</h2>
+            <p><strong>Project UUID:</strong> {{projectUUID}}</p>
+            <p><strong>User Email:</strong> {{userEmail}}</p>
+        </div>
+        <div class='footer'>
+            <p>Please review the GeoJSON files associated with your project.</p>
+        </div>
+    </div>
+</body>
+</html>

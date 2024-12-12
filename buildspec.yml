@@ -1,0 +1,170 @@
+version: 0.2
+
+env:
+  secrets-manager:
+    # Nonprod server-side env vars
+    NONPROD_AUTH_TRUST_HOST: natur/nonprod/auth-trust-host
+    NONPROD_NEXTAUTH_SECRET: natur/nonprod/nextauth-secret
+    NONPROD_NEXT_API_BASE_URL: natur/nonprod/next-api-base-url
+    NONPROD_DATABASE_URL: natur/nonprod/database-url
+    NONPROD_DATABASE_ENABLE_SEEDING: natur/nonprod/database-enable-seeding
+    NONPROD_AWS_ACCESS_KEY_ID: natur/nonprod/aws-access-key-id
+    NONPROD_AWS_SECRET_ACCESS_KEY: natur/nonprod/aws-secret-access-key
+    NONPROD_AWS_REGION: natur/nonprod/aws-region
+    NONPROD_AWS_BUCKET_NAME_PROFILE_IMGS: natur/nonprod/aws-bucket-name-profile-imgs
+    NONPROD_AWS_BUCKET_NAME_GEOJSON: natur/nonprod/aws-bucket-name-geojson
+    NONPROD_AWS_BUCKET_NAME_PROJECT_MANAGEMENT: natur/nonprod/aws-bucket-name-project-management
+    NONPROD_SENDGRID_API_KEY: natur/nonprod/sendgrid-api-key
+    NONPROD_EMAIL_FROM: natur/nonprod/email-from
+    NONPROD_LAND_ASSESSMENT_REQUEST_TO_EMAIL: natur/nonprod/land-assessment-request-to-email
+    NONPROD_NATUR_ENDPOINT_URL: natur/nonprod/natur-endpoint-url
+    # Nonprod client-side env vars
+    NONPROD_NEXT_PUBLIC_MAPBOX_TOKEN: natur/nonprod/next-public-mapbox-token
+    NONPROD_NEXT_PUBLIC_NATUR_APP_ECS_URL: natur/nonprod/next-public-natur-app-ecs-url
+    # Prod server-side env vars
+    PROD_AUTH_TRUST_HOST: natur/prod/auth-trust-host
+    PROD_NEXTAUTH_SECRET: natur/prod/nextauth-secret
+    PROD_NEXT_API_BASE_URL: natur/prod/next-api-base-url
+    PROD_DATABASE_URL: natur/prod/database-url
+    PROD_DATABASE_ENABLE_SEEDING: natur/prod/database-enable-seeding
+    PROD_AWS_ACCESS_KEY_ID: natur/prod/aws-access-key-id
+    PROD_AWS_SECRET_ACCESS_KEY: natur/prod/aws-secret-access-key
+    PROD_AWS_REGION: natur/prod/aws-region
+    PROD_AWS_BUCKET_NAME_PROFILE_IMGS: natur/prod/aws-bucket-name-profile-imgs
+    PROD_AWS_BUCKET_NAME_GEOJSON: natur/prod/aws-bucket-name-geojson
+    PROD_AWS_BUCKET_NAME_PROJECT_MANAGEMENT: natur/prod/aws-bucket-name-project-management
+    PROD_SENDGRID_API_KEY: natur/prod/sendgrid-api-key
+    PROD_EMAIL_FROM: natur/prod/email-from
+    PROD_LAND_ASSESSMENT_REQUEST_TO_EMAIL: natur/prod/land-assessment-request-to-email
+    # Prod client-side env vars
+    PROD_NEXT_PUBLIC_MAPBOX_TOKEN: natur/prod/next-public-mapbox-token
+
+phases:
+  install:
+    commands:
+      # Install AWS CLI, jq using apt-get package manager
+      - echo ">>>>> Installing dependencies ..."
+      - apt-get update || echo ">>>>> Failed to update package lists"
+      - apt-get install -y jq || (echo ">>>>> Failed to install dependencies. Exiting ..." && exit 1)
+  pre_build:
+    commands:
+      - echo ">>>>> Logging in to Amazon ECR ..."
+      - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com
+      # Find the branch name that contains the current commit
+      - BRANCH_NAME=$(git branch -r --contains $(git rev-parse HEAD) | grep -v '\->' | head -n 1 | sed 's/.*origin\///')
+      - echo ">>>>> BRANCH_NAME >>>>> $BRANCH_NAME"
+      - echo ">>>>> CODEBUILD_RESOLVED_SOURCE_VERSION >>>>> $CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - echo ">>>>> Determining docker tag and image uri ..."
+      - |
+        # Set default values for non-production environment variables
+        AUTH_TRUST_HOST=$NONPROD_AUTH_TRUST_HOST
+        NEXTAUTH_SECRET=$NONPROD_NEXTAUTH_SECRET
+        NEXT_API_BASE_URL=$NONPROD_NEXT_API_BASE_URL
+        DATABASE_URL=$NONPROD_DATABASE_URL
+        DATABASE_ENABLE_SEEDING=$NONPROD_DATABASE_ENABLE_SEEDING
+        AWS_ACCESS_KEY_ID=$NONPROD_AWS_ACCESS_KEY_ID
+        AWS_SECRET_ACCESS_KEY=$NONPROD_AWS_SECRET_ACCESS_KEY
+        AWS_REGION=$NONPROD_AWS_REGION
+        AWS_BUCKET_NAME_PROFILE_IMGS=$NONPROD_AWS_BUCKET_NAME_PROFILE_IMGS
+        AWS_BUCKET_NAME_GEOJSON=$NONPROD_AWS_BUCKET_NAME_GEOJSON
+        AWS_BUCKET_NAME_PROJECT_MANAGEMENT=$NONPROD_AWS_BUCKET_NAME_PROJECT_MANAGEMENT
+        SENDGRID_API_KEY=$NONPROD_SENDGRID_API_KEY
+        EMAIL_FROM=$NONPROD_EMAIL_FROM
+        LAND_ASSESSMENT_REQUEST_TO_EMAIL=$NONPROD_LAND_ASSESSMENT_REQUEST_TO_EMAIL
+        NATUR_ENDPOINT_URL=$NONPROD_NATUR_ENDPOINT_URL
+        NEXT_PUBLIC_MAPBOX_TOKEN=$NONPROD_NEXT_PUBLIC_MAPBOX_TOKEN
+        NEXT_PUBLIC_NATUR_APP_ECS_URL=$NONPROD_NEXT_PUBLIC_NATUR_APP_ECS_URL
+
+        DOCKER_TAG=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+
+        if [ "$BRANCH_NAME" = "main" ]; then
+          AUTH_TRUST_HOST=$PROD_AUTH_TRUST_HOST
+          NEXTAUTH_SECRET=$PROD_NEXTAUTH_SECRET
+          NEXT_API_BASE_URL=$PROD_NEXT_API_BASE_URL
+          DATABASE_URL=$PROD_DATABASE_URL
+          DATABASE_ENABLE_SEEDING=$PROD_DATABASE_ENABLE_SEEDING
+          AWS_ACCESS_KEY_ID=$PROD_AWS_ACCESS_KEY_ID
+          AWS_SECRET_ACCESS_KEY=$PROD_AWS_SECRET_ACCESS_KEY
+          AWS_REGION=$PROD_AWS_REGION
+          AWS_BUCKET_NAME_PROFILE_IMGS=$PROD_AWS_BUCKET_NAME_PROFILE_IMGS
+          AWS_BUCKET_NAME_GEOJSON=$PROD_AWS_BUCKET_NAME_GEOJSON
+          AWS_BUCKET_NAME_PROJECT_MANAGEMENT=$PROD_AWS_BUCKET_NAME_PROJECT_MANAGEMENT
+          SENDGRID_API_KEY=$PROD_SENDGRID_API_KEY
+          EMAIL_FROM=$PROD_EMAIL_FROM
+          LAND_ASSESSMENT_REQUEST_TO_EMAIL=$PROD_LAND_ASSESSMENT_REQUEST_TO_EMAIL
+          NEXT_PUBLIC_MAPBOX_TOKEN=$PROD_NEXT_PUBLIC_MAPBOX_TOKEN
+
+          DOCKER_TAG="prod-latest"
+        elif [ "$BRANCH_NAME" = "staging" ]; then
+          DOCKER_TAG="staging-latest"
+        fi
+
+        export AUTH_TRUST_HOST
+        export NEXTAUTH_SECRET
+        export NEXT_API_BASE_URL
+        export DATABASE_URL
+        export DATABASE_ENABLE_SEEDING
+        export AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY
+        export AWS_REGION
+        export AWS_BUCKET_NAME_PROFILE_IMGS
+        export AWS_BUCKET_NAME_GEOJSON
+        export AWS_BUCKET_NAME_PROJECT_MANAGEMENT
+        export SENDGRID_API_KEY
+        export EMAIL_FROM
+        export LAND_ASSESSMENT_REQUEST_TO_EMAIL
+        export NATUR_ENDPOINT_URL
+        export NEXT_PUBLIC_MAPBOX_TOKEN
+        export NEXT_PUBLIC_NATUR_APP_ECS_URL
+
+        export DOCKER_TAG
+        export IMAGE_URI="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY}:${DOCKER_TAG}"
+      - echo ">>>>> DOCKER_TAG >>>>> $DOCKER_TAG"
+      - echo ">>>>> IMAGE_URI >>>>> $IMAGE_URI"
+  build:
+    commands:
+      - echo ">>>>> Build started on `date`"
+      - echo ">>>>> Building the Docker image ..."
+      - |
+        docker build --no-cache \
+          --build-arg AUTH_TRUST_HOST=${AUTH_TRUST_HOST} \
+          --build-arg NEXTAUTH_SECRET=${NEXTAUTH_SECRET} \
+          --build-arg NEXT_API_BASE_URL=${NEXT_API_BASE_URL} \
+          --build-arg DATABASE_URL=${DATABASE_URL} \
+          --build-arg DATABASE_ENABLE_SEEDING=${DATABASE_ENABLE_SEEDING} \
+          --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+          --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
+          --build-arg AWS_REGION=${AWS_REGION} \
+          --build-arg AWS_BUCKET_NAME_PROFILE_IMGS=${AWS_BUCKET_NAME_PROFILE_IMGS} \
+          --build-arg AWS_BUCKET_NAME_GEOJSON=${AWS_BUCKET_NAME_GEOJSON} \
+          --build-arg AWS_BUCKET_NAME_PROJECT_MANAGEMENT=${AWS_BUCKET_NAME_PROJECT_MANAGEMENT} \
+          --build-arg SENDGRID_API_KEY=${SENDGRID_API_KEY} \
+          --build-arg EMAIL_FROM=${EMAIL_FROM} \
+          --build-arg LAND_ASSESSMENT_REQUEST_TO_EMAIL=${LAND_ASSESSMENT_REQUEST_TO_EMAIL} \
+          --build-arg NATUR_ENDPOINT_URL=${NATUR_ENDPOINT_URL} \
+          --build-arg NEXT_PUBLIC_MAPBOX_TOKEN=${NEXT_PUBLIC_MAPBOX_TOKEN} \
+          --build-arg NEXT_PUBLIC_NATUR_APP_ECS_URL=${NEXT_PUBLIC_NATUR_APP_ECS_URL} \
+          -t ${IMAGE_URI} .
+  post_build:
+    commands:
+      - echo ">>>>> Build completed on `date`"
+      - |
+        if [ "$DOCKER_TAG" = "staging-latest" ]; then
+          echo ">>>>> Checking for existing staging-latest image ..."
+          existing_image=$(aws ecr list-images --repository-name $ECR_REPOSITORY --region $AWS_DEFAULT_REGION --filter "tagStatus=TAGGED" --query 'imageIds[?contains(imageTag, `staging-latest`)].imageDigest' --output text)
+          if [ -n "$existing_image" ]; then
+            echo ">>>>> Deleting existing staging-latest image with digest $existing_image"
+            aws ecr batch-delete-image --repository-name $ECR_REPOSITORY --region $AWS_DEFAULT_REGION --image-ids imageDigest=$existing_image
+          else
+            echo ">>>>> No existing staging-latest image found"
+          fi
+        else
+          echo ">>>>> Branch Docker tag is not for staging, pushing image $IMAGE_URI"
+        fi
+      - echo ">>>>> Pushing the Docker image ..."
+      - docker push $IMAGE_URI || (echo "Failed to push image" && exit 1)
+      - echo ">>>>> Writing image definitions file ..."
+      - printf '[{"name":"container-name","imageUri":"%s"}]' $IMAGE_URI > imagedefinitions.json
+artifacts:
+  files:
+    - imagedefinitions.json

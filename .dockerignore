@@ -1,0 +1,47 @@
+# Ignore node_modules directory
+node_modules
+
+# Ignore dependency directories
+npm-debug.log
+pnpm-debug.log
+yarn-error.log
+yarn-debug.log
+
+# Ignore local environment files
+.env
+.env.local
+.env.*.local
+.env.test
+.env.test.local
+
+# Ignore any log files
+*.log
+
+# Ignore build directories
+/build
+/dist
+
+# Ignore coverage directory
+/coverage
+
+# Ignore various editor and OS files
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*.tmp
+
+# Ignore test directories and files
+/tests
+__tests__
+/test
+
+# Ignore IDE and editor directories and files
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# Ignore Docker files that might be used for development
+docker-compose.yml
+docker-compose.override.yml

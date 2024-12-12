@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>[Seeds Near Me] New Seed Order Request</title>
+    <style>
+      body { font-family: Arial, sans-serif; color: #333; } .header {
+      background-color: #342f74; color: white; padding: 1.5rem; border-radius:
+      1rem; } .header h1 { margin: 0; } .container { padding: 10px; }
+      .request-details table { margin: 20px 0; } .request-details { padding:
+      15px; border-radius: 0.75rem; background-color: #f5f5f5; }
+      .request-details h2 { margin-top: 0; } .request-details table td {
+      padding: 8px; } .species .table-container { border: 1px solid #ddd;
+      border-radius: 0.75rem; overflow: hidden; width: 100%; } .styled-table {
+      width: 100%; border-collapse: collapse; } .species .styled-table th,
+      .species .styled-table td { padding: 8px 12px; border: 1px solid #ddd; }
+      .species .styled-table th { background-color: #f4f4f4; } .footer {
+      margin-top: 20px; font-size: 0.9em; color: #666; }
+    </style>
+  </head>
+  <body>
+    <div class='header'>
+      <h1>[Seeds Near Me] New Seed Request #{{requestId}}</h1>
+    </div>
+    <div class='container'>
+      <h4><strong>{{requestedBy}}</strong>
+        has submitted a new seed order request (<strong>#{{requestId}}</strong>)
+      </h4>
+      <div class='request-details'>
+        <h2>REQUEST DETAILS</h2>
+        <table>
+          <tr>
+            <td>Affiliated project:</td>
+            <td><strong>{{projectName}}</strong></td>
+          </tr>
+          <tr>
+            <td>Date order created:</td>
+            <td><strong>{{dateRequested}}</strong></td>
+          </tr>
+          <tr>
+            <td>Seeds required date:</td>
+            <td><strong>{{seedsRequiredDate}}</strong></td>
+          </tr>
+          <tr>
+            <td>Seed treatment requested:</td>
+            <td><strong>{{seedTreatment}}</strong></td>
+          </tr>
+          <tr>
+            <td>Seed viability testing requested:</td>
+            <td><strong>{{seedViability}}</strong></td>
+          </tr>
+          <tr>
+            <td>Provenance information requested:</td>
+            <td><strong>{{seedProvenance}}</strong></td>
+          </tr>
+        </table>
+      </div>
+      <div class='species'>
+        <h2>SEED SPECIES AND QUANTITIES REQUESTED</h2>
+        <div class='table-container'>
+          <table class='styled-table'>
+            <thead>
+              <tr>
+                <th>Species</th>
+                <th>Quantity (g)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each seedsSpecies}}
+                <tr>
+                  <td>{{this.seedSpecies}}</td>
+                  <td>{{this.quantity}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table></div>
+      </div>
+      {{#if hasFootNote}}
+        <div class='footer'>
+          <p>* Due to the large number of species requested, only a subset is
+            displayed here. Please refer to the full order details for the
+            complete list.</p>
+        </div>
+      {{/if}}
+      <div class='footer'>
+        <p>View this request in full:
+          <a href='{{appUrl}}/seeds-near-me'>View Request</a></p>
+      </div>
+    </div>
+  </body>
+</html>

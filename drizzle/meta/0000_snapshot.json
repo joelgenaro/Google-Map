@@ -1,0 +1,1300 @@
+{
+  "id": "2a1b1400-c822-4d44-8f34-70fada8b16bb",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "6",
+  "dialect": "postgresql",
+  "tables": {
+    "public.landAssessmentCarbonEstimationArea": {
+      "name": "landAssessmentCarbonEstimationArea",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "carbonMethod": {
+          "name": "carbonMethod",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "landAssessmentCarbonEstimationArea_userId_user_id_fk": {
+          "name": "landAssessmentCarbonEstimationArea_userId_user_id_fk",
+          "tableFrom": "landAssessmentCarbonEstimationArea",
+          "tableTo": "user",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.landAssessmentCarbonExclusionArea": {
+      "name": "landAssessmentCarbonExclusionArea",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "landAssessmentCarbonExclusionArea_userId_user_id_fk": {
+          "name": "landAssessmentCarbonExclusionArea_userId_user_id_fk",
+          "tableFrom": "landAssessmentCarbonExclusionArea",
+          "tableTo": "user",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.landAssessmentNewProject": {
+      "name": "landAssessmentNewProject",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectName": {
+          "name": "projectName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "landAssessmentNewProject_userId_user_id_fk": {
+          "name": "landAssessmentNewProject_userId_user_id_fk",
+          "tableFrom": "landAssessmentNewProject",
+          "tableTo": "user",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.platform_update": {
+      "name": "platform_update",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "NOW()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_by": {
+          "name": "deleted_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "start_date": {
+          "name": "start_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "CURRENT_DATE"
+        },
+        "end_date": {
+          "name": "end_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        }
+      },
+      "indexes": {
+        "platform_update_id_idx": {
+          "name": "platform_update_id_idx",
+          "columns": ["id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.profile": {
+      "name": "profile",
+      "schema": "",
+      "columns": {
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "profileType": {
+          "name": "profileType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userType": {
+          "name": "userType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "registerReason": {
+          "name": "registerReason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "experienceLevel": {
+          "name": "experienceLevel",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "profile_userId_user_id_fk": {
+          "name": "profile_userId_user_id_fk",
+          "tableFrom": "profile",
+          "tableTo": "user",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "profile_userId_unique": {
+          "name": "profile_userId_unique",
+          "nullsNotDistinct": false,
+          "columns": ["userId"]
+        }
+      }
+    },
+    "public.projectManagement": {
+      "name": "projectManagement",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "projectName": {
+          "name": "projectName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "landholderName": {
+          "name": "landholderName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "letterOfDeclarationUrl": {
+          "name": "letterOfDeclarationUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "auditScheduleUrl": {
+          "name": "auditScheduleUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "letterToParticipateUrl": {
+          "name": "letterToParticipateUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "specificationsUrls": {
+          "name": "specificationsUrls",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "landManagementPlanUrl": {
+          "name": "landManagementPlanUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fireManagementPlanUrl": {
+          "name": "fireManagementPlanUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permanencePlanUrl": {
+          "name": "permanencePlanUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "fullCAMFilesUrl": {
+          "name": "fullCAMFilesUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "carbonEstimationAreaBaselineDataUrl": {
+          "name": "carbonEstimationAreaBaselineDataUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "carbonAdditionalFilesUrls": {
+          "name": "carbonAdditionalFilesUrls",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "carbonAdditionalFilesDescription": {
+          "name": "carbonAdditionalFilesDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "monitoringPlotsUrl": {
+          "name": "monitoringPlotsUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "monitoringDataUrl": {
+          "name": "monitoringDataUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "monitoringAdditionalFilesUrls": {
+          "name": "monitoringAdditionalFilesUrls",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "monitoringAdditionalFilesDescription": {
+          "name": "monitoringAdditionalFilesDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "projectManagement_userId_user_id_fk": {
+          "name": "projectManagement_userId_user_id_fk",
+          "tableFrom": "projectManagement",
+          "tableTo": "user",
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_detail_activity": {
+      "name": "project_management_detail_activity",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "activity": {
+          "name": "activity",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "from_date": {
+          "name": "from_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "to_date": {
+          "name": "to_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attached_file": {
+          "name": "attached_file",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_detail_activity_project_id_projectManagement_id_fk": {
+          "name": "project_management_detail_activity_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_detail_activity",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_detail_alert": {
+      "name": "project_management_detail_alert",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "alert": {
+          "name": "alert",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "date": {
+          "name": "date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "raise_issue": {
+          "name": "raise_issue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "danger_level": {
+          "name": "danger_level",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_detail_alert_project_id_projectManagement_id_fk": {
+          "name": "project_management_detail_alert_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_detail_alert",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_detail_issue": {
+      "name": "project_management_detail_issue",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "issue": {
+          "name": "issue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "action": {
+          "name": "action",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "date": {
+          "name": "date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attached_file": {
+          "name": "attached_file",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_detail_issue_project_id_projectManagement_id_fk": {
+          "name": "project_management_detail_issue_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_detail_issue",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_monitoring_data_list": {
+      "name": "project_management_monitoring_data_list",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dataset_name": {
+          "name": "dataset_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data_collection_date": {
+          "name": "data_collection_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monitoring_timing": {
+          "name": "monitoring_timing",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_monitoring_data_list_project_id_projectManagement_id_fk": {
+          "name": "project_management_monitoring_data_list_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_monitoring_data_list",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_monitoring_plant": {
+      "name": "project_management_monitoring_plant",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monitoring_data_id": {
+          "name": "monitoring_data_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plant_id": {
+          "name": "plant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plot_id": {
+          "name": "plot_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "species": {
+          "name": "species",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "height": {
+          "name": "height",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "canopy_diameter": {
+          "name": "canopy_diameter",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plant_notes": {
+          "name": "plant_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_monitoring_plant_project_id_projectManagement_id_fk": {
+          "name": "project_management_monitoring_plant_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_monitoring_plant",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "project_management_monitoring_plant_monitoring_data_id_project_management_monitoring_data_list_id_fk": {
+          "name": "project_management_monitoring_plant_monitoring_data_id_project_management_monitoring_data_list_id_fk",
+          "tableFrom": "project_management_monitoring_plant",
+          "tableTo": "project_management_monitoring_data_list",
+          "columnsFrom": ["monitoring_data_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_monitoring_plot": {
+      "name": "project_management_monitoring_plot",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "monitoring_data_id": {
+          "name": "monitoring_data_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "plot_id": {
+          "name": "plot_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "canopy_cover": {
+          "name": "canopy_cover",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "leaf_litter": {
+          "name": "leaf_litter",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "bair_soil": {
+          "name": "bair_soil",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rock": {
+          "name": "rock",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vegetation": {
+          "name": "vegetation",
+          "type": "smallint",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "herbivory": {
+          "name": "herbivory",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "disease": {
+          "name": "disease",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "plot_notes": {
+          "name": "plot_notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_monitoring_plot_project_id_projectManagement_id_fk": {
+          "name": "project_management_monitoring_plot_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_monitoring_plot",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "project_management_monitoring_plot_monitoring_data_id_project_management_monitoring_data_list_id_fk": {
+          "name": "project_management_monitoring_plot_monitoring_data_id_project_management_monitoring_data_list_id_fk",
+          "tableFrom": "project_management_monitoring_plot",
+          "tableTo": "project_management_monitoring_data_list",
+          "columnsFrom": ["monitoring_data_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.project_management_monitoring_report": {
+      "name": "project_management_monitoring_report",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "from_date": {
+          "name": "from_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "to_date": {
+          "name": "to_date",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "method": {
+          "name": "method",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "projectName": {
+          "name": "projectName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "report": {
+          "name": "report",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "attached_file": {
+          "name": "attached_file",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "project_management_monitoring_report_project_id_projectManagement_id_fk": {
+          "name": "project_management_monitoring_report_project_id_projectManagement_id_fk",
+          "tableFrom": "project_management_monitoring_report",
+          "tableTo": "projectManagement",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.seeds_request": {
+      "name": "seeds_request",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "NOW()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_at": {
+          "name": "deleted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_by": {
+          "name": "created_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_by": {
+          "name": "updated_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "deleted_by": {
+          "name": "deleted_by",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "project_id": {
+          "name": "project_id",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "required_date": {
+          "name": "required_date",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seed_treatment": {
+          "name": "seed_treatment",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "seed_viability": {
+          "name": "seed_viability",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "seed_provenance": {
+          "name": "seed_provenance",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "seeds_species": {
+          "name": "seeds_species",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "geo_json_data": {
+          "name": "geo_json_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "status": {
+          "name": "status",
+          "type": "status_enum",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "seeds_request_id_idx": {
+          "name": "seeds_request_id_idx",
+          "columns": ["id"],
+          "isUnique": false
+        },
+        "seeds_request_project_id_idx": {
+          "name": "seeds_request_project_id_idx",
+          "columns": ["project_id"],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "seeds_request_project_id_landAssessmentNewProject_id_fk": {
+          "name": "seeds_request_project_id_landAssessmentNewProject_id_fk",
+          "tableFrom": "seeds_request",
+          "tableTo": "landAssessmentNewProject",
+          "columnsFrom": ["project_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.user": {
+      "name": "user",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "password": {
+          "name": "password",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "emailVerified": {
+          "name": "emailVerified",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image": {
+          "name": "image",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'user'"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "user_email_unique": {
+          "name": "user_email_unique",
+          "nullsNotDistinct": false,
+          "columns": ["email"]
+        }
+      }
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
